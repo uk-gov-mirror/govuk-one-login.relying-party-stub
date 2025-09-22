@@ -3,7 +3,7 @@ FROM node:lts AS scripts
 COPY scripts .
 RUN npm install --ignore-scripts
 
-FROM gradle:8.14.3-jdk17@sha256:71624f9e8bdbbccb9fe13717579faafce0d52846eb5048bf6567691c8d933de8 AS build
+FROM gradle:9.1.0-jdk17@sha256:3aabe6ea89331eb4a704facd3a7c461b525a843f1ea25a49a6ed318e1e92e86d AS build
 WORKDIR /home/gradle/src
 
 COPY --chown=gradle:gradle gradlew build.gradle ./
