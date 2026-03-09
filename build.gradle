@@ -42,6 +42,10 @@ dependencies {
             version { strictly '[4.1.129.Final,4.2.0)' }
             because 'CVE-2025-67735 fixed in io.netty:netty-codec-http:4.1.129.Final and higher'
         }
+        implementation('com.fasterxml.jackson.core:jackson-core:[2.21.1,)') {
+            version { strictly '[2.21.1,)' }
+            because 'GHSA-72hv-8253-57qq is fixed in com.fasterxml.jackson.core:jackson-core:2.21.1 and higher'
+        }
     }
 
     implementation(platform("software.amazon.awssdk:bom:2.30.21"))
