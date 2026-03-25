@@ -31,12 +31,12 @@ public class BackChannelLogoutHandler implements Route {
                 URLEncodedUtils.parse(request.body(), defaultCharset()).stream()
                         .collect(toMap(NameValuePair::getName, NameValuePair::getValue))
                         .getOrDefault("logout_token", "");
-
+        var useAlternativeDomain = "true".equals(request.cookie("useAlternativeDomain"));
         try {
             var jwt = SignedJWT.parse(payload);
 
             oidcClient
-                    .validateLogoutToken(jwt)
+                    .validateLogoutToken(jwt, useAlternativeDomain)
                     .map(ClaimsSet::toJSONString)
                     .ifPresentOrElse(
                             claims -> {

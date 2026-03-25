@@ -36,15 +36,17 @@ public class AuthCallbackHandler implements Route {
         if (codeVerifierValue != null) {
             response.removeCookie("/", "codeVerifier");
         }
-
+        var useAlternativeDomain = "true".equals(request.cookie("useAlternativeDomain"));
         var tokens =
                 oidcClient.makeTokenRequest(
                         request.queryParams("code"),
                         relyingPartyConfig.authCallbackUrl(),
-                        codeVerifierValue);
-        oidcClient.validateIdToken(tokens.getIDToken());
+                        codeVerifierValue,
+                        useAlternativeDomain);
+        oidcClient.validateIdToken(tokens.getIDToken(), useAlternativeDomain);
         response.cookie("/", "idToken", tokens.getIDToken().getParsedString(), 3600, false, true);
-        var userInfo = oidcClient.makeUserInfoRequest(tokens.getAccessToken());
+        var userInfo =
+                oidcClient.makeUserInfoRequest(tokens.getAccessToken(), useAlternativeDomain);
 
         var model = new HashMap<>();
         model.put("id_token", tokens.getIDToken().getParsedString());

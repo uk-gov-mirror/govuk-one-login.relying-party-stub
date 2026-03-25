@@ -13,6 +13,7 @@ public class RelyingPartyGetHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
         var model = new HashMap<>();
         model.put("relyingParties", Configuration.getInstance().values().stream().toList());
+        model.put("useAlternativeDomain", "true".equals(request.cookie("useAlternativeDomain")));
         return ViewHelper.render(model, "relying-parties.mustache");
     }
 }
