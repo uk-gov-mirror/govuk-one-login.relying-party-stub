@@ -27,6 +27,7 @@ public class HomeHandler implements Route {
         var relyingPartyConfig = Configuration.getRelyingPartyConfig(relyingPartyString);
         var model = new HashMap<>();
         model.put("servicename", relyingPartyConfig.serviceName());
+        model.put("useAlternativeDomain", "true".equals(request.cookie("useAlternativeDomain")));
         LOG.info(
                 "Rendering RP with serviceName: {} and clientType: {}",
                 relyingPartyConfig.serviceName(),

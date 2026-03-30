@@ -22,6 +22,11 @@ public class RelyingPartyPostHandler implements Route {
 
         response.cookie(
                 "/", "relyingParty", formParameters.get("relying-party"), 3600, false, true);
+        if ("on".equals(formParameters.get("use-alternative-domain"))) {
+            response.cookie("/", "useAlternativeDomain", "true", 3600, false, true);
+        } else {
+            response.removeCookie("/", "useAlternativeDomain");
+        }
         response.redirect("/");
         return null;
     }

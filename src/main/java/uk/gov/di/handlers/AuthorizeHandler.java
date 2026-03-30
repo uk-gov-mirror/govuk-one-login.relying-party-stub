@@ -72,11 +72,13 @@ public class AuthorizeHandler implements Route {
             if (relyingPartyConfig.clientType().equals("app")) {
                 LOG.info("Doc Checking App journey initialized");
                 scopes.add("doc-checking-app");
+                var useAlternativeDomain = "true".equals(request.cookie("useAlternativeDomain"));
                 var opURL =
                         oidcClient.buildDocAppAuthorizeRequest(
                                 relyingPartyConfig.authCallbackUrl(),
                                 Scope.parse(scopes),
-                                language);
+                                language,
+                                useAlternativeDomain);
                 LOG.info("Redirecting to OP");
                 response.redirect(opURL);
                 return null;
@@ -250,7 +252,7 @@ public class AuthorizeHandler implements Route {
             if (!Objects.equals(formParameters.get("channel"), "none")) {
                 channel = formParameters.get("channel");
             }
-
+            var useAlternativeDomain = "true".equals(request.cookie("useAlternativeDomain"));
             var authRequest =
                     buildAuthorizeRequest(
                             relyingPartyConfig,
@@ -267,7 +269,8 @@ public class AuthorizeHandler implements Route {
                             codeChallengeMethod,
                             codeVerifier,
                             loginHint,
-                            channel);
+                            channel,
+                            useAlternativeDomain);
 
             LOG.info("Redirecting to OP");
             response.redirect(authRequest.toURI().toString());
@@ -306,7 +309,8 @@ public class AuthorizeHandler implements Route {
             CodeChallengeMethod codeChallengeMethod,
             CodeVerifier codeVerifier,
             String loginHint,
-            String channel)
+            String channel,
+            boolean useAlternativeDomain)
             throws URISyntaxException {
         if ("object".equals(formParameters.getOrDefault("request", "query"))) {
             LOG.info("Building authorize request with JAR");
@@ -323,7 +327,8 @@ public class AuthorizeHandler implements Route {
                     codeChallengeMethod,
                     codeVerifier,
                     loginHint,
-                    channel);
+                    channel,
+                    useAlternativeDomain);
         } else {
             LOG.info("Building authorize request with query params");
             return oidcClient.buildQueryParamAuthorizeRequest(
@@ -337,7 +342,8 @@ public class AuthorizeHandler implements Route {
                     maxAge,
                     codeChallengeMethod,
                     codeVerifier,
-                    channel);
+                    channel,
+                    useAlternativeDomain);
         }
     }
 }

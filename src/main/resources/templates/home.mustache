@@ -63,6 +63,9 @@
             <h1 class="govuk-heading-xl">
                 {{servicename}}
             </h1>
+            {{#useAlternativeDomain}}
+              <h3 class="govuk-heading-m">Using alternative domain</h3>
+            {{/useAlternativeDomain}}
         </div>
         <div class="govuk-grid-row">
             <form method="post" action="/oidc/auth">
@@ -366,6 +369,11 @@
                                 </label>
                             </div>
                         </div>
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-6">
+                            <h3 class="govuk-fieldset__heading">
+                                Use alternative domain
+                            </h3>
+                        </legend>
                     </fieldset>
                 </div>
 
