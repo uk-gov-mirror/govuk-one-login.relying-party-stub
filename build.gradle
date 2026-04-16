@@ -1,7 +1,9 @@
 buildscript {
     repositories {
+        mavenCentral()
+
         maven {
-            url 'https://gds.jfrog.io/artifactory/di-allowed-repos'
+            url 'https://repo.danubetech.com/repository/maven-public/'
         }
     }
 }
@@ -18,8 +20,10 @@ apply plugin: 'idea'
 group 'uk.gov.di'
 
 repositories {
+    mavenCentral()
+
     maven {
-        url 'https://gds.jfrog.io/artifactory/di-allowed-repos'
+        url 'https://repo.danubetech.com/repository/maven-public/'
     }
 }
 
