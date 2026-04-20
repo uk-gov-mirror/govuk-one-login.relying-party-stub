@@ -22,6 +22,8 @@ exports.handler = async(event) => {
 
     // See https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-lambda-authorizer.html
     const path = event.requestContext.http.path;
+    console.log(path)
+    console.log(event.requestContext.http)
 
     // Allow access to JWKs endpoints
     if(path.endsWith("/.well-known/jwks.json")){
