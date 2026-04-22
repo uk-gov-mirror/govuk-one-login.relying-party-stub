@@ -1,5 +1,5 @@
 FROM node:lts AS scripts
-
+# TODO: pin this
 COPY scripts .
 RUN npm install --ignore-scripts
 
