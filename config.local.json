@@ -8,6 +8,6 @@
     "id_token_signing_algorithm": "ES256",
     "service_name": "Local RP Stub",
     "op_base_url": "http://host.docker.internal:4400/",
-    "token_client_secret": "local-client-secret"
+    "token_client_secret": null
   }
 }
